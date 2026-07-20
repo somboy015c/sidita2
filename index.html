@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIDITA · Modern Auto | Rent, Lease, Own</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231a7a5a'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E" type="image/svg+xml">
+  <meta name="description" content="SIDITA — transparent, interest-free vehicle rental, leasing and ownership. Verified fleet, fair terms, no hidden fees.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f6f8f9;
+      --ink: #0b1a1a;
+      --ink-soft: #2f4040;
+      --green-accent: #1a7a5a;
+      --gold: #d4a14b;
+      --gold-light: #f3e3c4;
+      --border-light: rgba(0,0,0,0.06);
+      --shadow-sm: 0 12px 30px rgba(0,0,0,0.04);
+      --shadow-md: 0 20px 40px rgba(0,0,0,0.06);
+      --radius: 32px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 32px;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 60px;
+      transition: 0.2s ease;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      background: var(--ink);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary {
+      background: var(--green-accent);
+      color: white;
+    }
+    .btn-primary:hover { background: #0e5f45; transform: scale(1.02); }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+      box-shadow: none;
+    }
+    .btn-outline:hover { background: var(--ink); color: white; }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--ink);
+    }
+    .btn-gold:hover { background: #c08f3a; }
+
+    /* ----- HEADER (dynamic) ----- */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: transparent;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+      border-bottom: 1px solid transparent;
+      transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    header.scrolled {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.03);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .brand img { height: 44px; width: auto; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-soft);
+      transition: 0.2s;
+      position: relative;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -4px;
+      width: 0; height: 2px;
+      background: var(--green-accent);
+      transition: 0.25s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta { display: flex; align-items: center; gap: 16px; }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .burger span {
+      width: 24px; height: 2px;
+      background: var(--ink);
+      border-radius: 4px;
+      transition: 0.2s;
+    }
+
+    .mobile-panel {
+      display: none;
+      background: white;
+      padding: 20px 40px 30px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    /* ----- HERO (bold, editorial) ----- */
+    .hero {
+      padding: 160px 0 80px;
+      background: linear-gradient(160deg, #f0f5f3 0%, #ffffff 80%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--gold-light);
+      color: var(--green-accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 6px 18px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 5.6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span { color: var(--green-accent); }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--ink-soft);
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+
+    .trust-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 28px 40px;
+      border-top: 1px solid var(--border-light);
+      padding-top: 30px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .trust-item svg { flex-shrink: 0; }
+
+    .hero-art {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-car-img {
+      width: 100%;
+      max-width: 620px;
+      filter: drop-shadow(0 30px 40px rgba(0,0,0,0.08));
+      transition: transform 0.6s ease;
+    }
+
+    .hero-car-img:hover { transform: scale(1.02); }
+
+    /* ----- MARQUEE (modern) ----- */
+    .band {
+      background: var(--ink);
+      color: white;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 0;
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 50px;
+      width: max-content;
+      animation: scroll 30s linear infinite;
+    }
+
+    .marquee-track span {
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      white-space: nowrap;
+    }
+
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ----- sections ----- */
+    section { padding: 100px 0; }
+
+    .section-head { max-width: 640px; margin-bottom: 52px; }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .section-head h2 { font-size: clamp(32px, 3.6vw, 48px); }
+    .section-head p { color: var(--ink-soft); font-size: 17px; margin-top: 14px; line-height: 1.6; }
+
+    /* VALUES */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 24px;
+    }
+    .value-card {
+      background: var(--bg-soft);
+      padding: 40px 34px;
+      border-radius: var(--radius);
+      transition: 0.25s;
+      border: 1px solid transparent;
+    }
+    .value-card:hover { border-color: var(--green-accent); transform: translateY(-6px); }
+    .value-card .num { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 14px; letter-spacing: 0.02em; }
+    .value-card h3 { font-size: 24px; margin-bottom: 10px; }
+    .value-card p { color: var(--ink-soft); font-size: 15px; line-height: 1.6; }
+
+    /* SERVICES */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 28px;
+    }
+    .service-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      border: 1px solid var(--border-light);
+      transition: 0.25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .service-card:hover { box-shadow: var(--shadow-md); transform: translateY(-6px); }
+    .service-icon {
+      width: 56px; height: 56px;
+      background: var(--gold-light);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+    }
+    .service-card h3 { font-size: 24px; margin-bottom: 10px; }
+    .service-card p { color: var(--ink-soft); line-height: 1.6; font-size: 15px; }
+    .service-price { font-weight: 700; color: var(--green-accent); font-size: 18px; margin-top: 16px; }
+
+    /* FLEET */
+    .fleet-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 24px;
+    }
+    .fleet-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: white;
+      border: 1px solid var(--border-light);
+      transition: 0.25s;
+      box-shadow: var(--shadow-sm);
+    }
+    .fleet-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
+    .fleet-media {
+      height: 180px;
+      background: var(--bg-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .fleet-media img { max-height: 120px; width: auto; }
+    .fleet-body { padding: 22px 24px 26px; }
+    .fleet-body h3 { font-size: 20px; margin-bottom: 6px; }
+    .fleet-body p { color: var(--ink-soft); font-size: 14px; }
+    .fleet-tag {
+      display: inline-block;
+      background: var(--gold-light);
+      color: var(--green-accent);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-top: 10px;
+    }
+
+    /* PROCESS */
+    .process {
+      background: var(--ink);
+      color: white;
+      border-radius: 40px 40px 0 0;
+      margin-top: 20px;
+    }
+    .process .section-head h2 { color: white; }
+    .process .section-head p { color: rgba(255,255,255,0.6); }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 40px;
+    }
+    .step { border-top: 2px solid rgba(255,255,255,0.1); padding-top: 28px; }
+    .step .step-num { font-weight: 700; color: var(--gold); font-size: 18px; margin-bottom: 10px; }
+    .step h3 { font-size: 22px; margin-bottom: 8px; }
+    .step p { color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+    /* STATS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 30px;
+      text-align: center;
+    }
+    .stat h3 { font-size: 44px; font-weight: 800; color: var(--green-accent); }
+    .stat p { font-weight: 500; color: var(--ink-soft); margin-top: 6px; letter-spacing: 0.02em; }
+
+    /* TESTIMONIALS */
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 28px;
+    }
+    .test-card {
+      background: var(--bg-soft);
+      border-radius: var(--radius);
+      padding: 36px 30px;
+      border: 1px solid var(--border-light);
+    }
+    .stars { color: var(--gold); font-size: 18px; letter-spacing: 2px; margin-bottom: 14px; }
+    .test-card p { font-size: 16px; line-height: 1.7; color: var(--ink); }
+    .test-who { display: flex; align-items: center; gap: 14px; margin-top: 24px; }
+    .avatar {
+      width: 44px; height: 44px;
+      background: var(--green-accent);
+      color: white;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+    .test-who strong { display: block; font-size: 15px; }
+    .test-who span { color: var(--ink-soft); font-size: 13px; }
+
+    /* FAQ */
+    .faq-list { max-width: 800px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border-light); padding: 10px 0; }
+    .faq-q {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 0;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: left;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .faq-q .plus { font-size: 26px; color: var(--gold); transition: 0.3s; }
+    .faq-item.open .faq-q .plus { transform: rotate(45deg); }
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.4s ease;
+    }
+    .faq-a p { padding-bottom: 24px; color: var(--ink-soft); line-height: 1.7; }
+
+    /* CTA */
+    .cta-section {
+      background: var(--bg-soft);
+      border-radius: 40px 40px 0 0;
+      padding: 80px 0;
+    }
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .cta-grid h2 { font-size: 38px; margin-bottom: 18px; }
+    .cta-grid p { color: var(--ink-soft); font-size: 17px; line-height: 1.7; }
+    .cta-contact { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+    .cta-contact a { display: flex; align-items: center; gap: 12px; color: var(--ink); font-weight: 500; text-decoration: none; }
+
+    .form-card {
+      background: white;
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+    .field.full { grid-column: 1/-1; }
+    .field label { font-weight: 500; font-size: 13px; color: var(--ink-soft); margin-bottom: 4px; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border-light);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      background: var(--bg-soft);
+      transition: 0.2s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--green-accent);
+      background: white;
+    }
+    .field textarea { min-height: 90px; resize: vertical; }
+    .form-note { font-size: 13px; color: var(--ink-soft); margin-top: 16px; }
+
+    .form-success { display: none; text-align: center; padding: 20px 0; }
+    .form-success.show { display: block; }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: rgba(255,255,255,0.7);
+      padding: 70px 0 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr 0.8fr 1fr;
+      gap: 50px;
+      padding-bottom: 50px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-brand img { height: 44px; margin-bottom: 18px; }
+    .footer-brand p { font-size: 14px; line-height: 1.7; max-width: 280px; color: rgba(255,255,255,0.5); }
+    .footer-social { display: flex; gap: 12px; margin-top: 22px; }
+    .footer-social a {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: 0.2s;
+      text-decoration: none;
+    }
+    .footer-social a:hover { background: var(--gold); border-color: var(--gold); }
+    .footer-col h4 { color: white; font-size: 16px; margin-bottom: 22px; font-weight: 600; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 12px; list-style: none; }
+    .footer-col a { color: rgba(255,255,255,0.55); font-size: 14px; transition: 0.2s; text-decoration: none; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-col address { font-style: normal; line-height: 1.9; color: rgba(255,255,255,0.55); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      padding: 28px 0;
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-art { order: -1; }
+      .values-grid, .services-grid, .fleet-grid, .process-grid, .test-grid { grid-template-columns: repeat(2,1fr); }
+      .stats-grid { grid-template-columns: repeat(2,1fr); }
+      .cta-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .wrap { padding: 0 24px; }
+      .nav-links { display: none; }
+      .burger { display: flex; }
+      .values-grid, .services-grid, .fleet-grid, .process-grid, .test-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <nav class="nav">
+    <a href="#top" class="brand"><img src="logo.png" alt="SIDITA"></a>
+    <ul class="nav-links">
+      <li><a href="#fleet">Fleet</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Book a car</a>
+      <button class="burger" id="burgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-panel" id="mobilePanel">
+    <ul style="display:flex;flex-direction:column;gap:6px;padding:10px 0;list-style:none;">
+      <li><a href="#fleet" style="font-weight:600;padding:10px 0;border-bottom:1px solid var(--border-light);text-decoration:none;color:var(--ink);">Fleet</a></li>
+      <li><a href="#services" style="font-weight:600;padding:10px 0;border-bottom:1px solid var(--border-light);text-decoration:none;color:var(--ink);">Services</a></li>
+      <li><a href="#how" style="font-weight:600;padding:10px 0;border-bottom:1px solid var(--border-light);text-decoration:none;color:var(--ink);">How it works</a></li>
+      <li><a href="#about" style="font-weight:600;padding:10px 0;border-bottom:1px solid var(--border-light);text-decoration:none;color:var(--ink);">About</a></li>
+      <li><a href="#faq" style="font-weight:600;padding:10px 0;border-bottom:1px solid var(--border-light);text-decoration:none;color:var(--ink);">FAQ</a></li>
+      <li><a href="#contact" style="font-weight:600;padding:10px 0;text-decoration:none;color:var(--ink);">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="hero-badge">✦ 2026 collection</span>
+        <h1>Drive <span>honest</span> <br>terms, every mile.</h1>
+        <p>Rent, lease or own a verified vehicle with zero hidden fees, interest-free plans, and full transparency — from quote to keys.</p>
+        <div class="hero-ctas">
+          <a href="#fleet" class="btn btn-primary">Explore fleet</a>
+          <a href="#how" class="btn btn-outline">How it works</a>
+        </div>
+        <div class="trust-strip">
+          <div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4" stroke="#1a7a5a"/></svg> Interest-free</div>
+          <div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M8 4v4M16 4v4"/></svg> Fully insured</div>
+          <div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 24/7 support</div>
+          <div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg> Verified history</div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <img class="hero-car-img" src="car3.png" alt="Luxury vehicle" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="band">
+    <div class="wrap" style="padding:0 40px; overflow:hidden;">
+      <div class="marquee-track">
+        <span>Sedans</span><span>◆</span><span>SUVs</span><span>◆</span><span>Luxury</span><span>◆</span><span>Electric</span><span>◆</span><span>Rent</span><span>◆</span><span>Lease</span><span>◆</span><span>Own</span><span>◆</span>
+        <span>Sedans</span><span>◆</span><span>SUVs</span><span>◆</span><span>Luxury</span><span>◆</span><span>Electric</span><span>◆</span><span>Rent</span><span>◆</span><span>Lease</span><span>◆</span><span>Own</span><span>◆</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT / VALUES -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="hero-badge" style="background:var(--gold-light);">why sidita</span>
+        <h2>Mobility, built on trust.</h2>
+        <p>Every agreement is clear, every vehicle inspected, every naira accounted for. No fine print, no surprises.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card"><div class="num">01</div><h3>Transparent pricing</h3><p>What you see is what you pay. No hidden fees, no last-minute charges.</p></div>
+        <div class="value-card"><div class="num">02</div><h3>Halal-conscious</h3><p>Interest-free financing that's fair and straightforward — terms you can trust.</p></div>
+        <div class="value-card"><div class="num">03</div><h3>Rigorously inspected</h3><p>Every car passes a full mechanical check before every handover. Safety first.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" style="background:var(--bg-soft);">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="hero-badge" style="background:var(--gold-light);">services</span>
+        <h2>Three honest ways to move.</h2>
+        <p>Flexible plans, same transparent terms — rent, lease, or own.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="2"><path d="M3 12h18M3 12l4-4M3 12l4 4"/></svg></div>
+          <h3>Short-term rental</h3>
+          <p>Daily or weekly — ideal for trips, events, or when your car is in the shop.</p>
+          <div class="service-price">From ₦25,000 / day</div>
+          <a href="#" class="btn btn-outline" style="margin-top:20px; width:100%;">Rent now</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg></div>
+          <h3>Long-term lease</h3>
+          <p>6–36 month leases with maintenance, insurance, and an option to own.</p>
+          <div class="service-price">From ₦380,000 / month</div>
+          <a href="#" class="btn btn-outline" style="margin-top:20px; width:100%;">Lease now</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="2"><path d="M12 3l8 4v6c0 4.4-3.2 7.8-8 9-4.8-1.2-8-4.6-8-9V7l8-4z"/></svg></div>
+          <h3>Own a vehicle</h3>
+          <p>Buy outright or use our interest-free installment plan. The car is yours from day one.</p>
+          <div class="service-price">Plans from 12 months</div>
+          <a href="#" class="btn btn-outline" style="margin-top:20px; width:100%;">Own now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEET -->
+  <section id="fleet">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="hero-badge" style="background:var(--gold-light);">the fleet</span>
+        <h2>Verified vehicles, ready today.</h2>
+        <p>Browse by category — pricing, specs, and availability all in one place.</p>
+      </div>
+      <div class="fleet-grid">
+        <a href="#" class="fleet-card" style="text-decoration:none; color:inherit;">
+          <div class="fleet-media"><img src="bmw_PNG1683.png" alt="Sedan"></div>
+          <div class="fleet-body"><h3>Sedans</h3><p>Comfortable, efficient saloons.</p><span class="fleet-tag">12 vehicles</span></div>
+        </a>
+        <a href="#" class="fleet-card" style="text-decoration:none; color:inherit;">
+          <div class="fleet-media"><img src="land_rover_PNG49.png" alt="SUV"></div>
+          <div class="fleet-body"><h3>SUVs</h3><p>Spacious 4x4s for family & terrain.</p><span class="fleet-tag">18 vehicles</span></div>
+        </a>
+        <a href="#" class="fleet-card" style="text-decoration:none; color:inherit;">
+          <div class="fleet-media"><img src="mercedes_PNG1840.png" alt="Luxury"></div>
+          <div class="fleet-body"><h3>Luxury</h3><p>Premium sedans & coupes.</p><span class="fleet-tag">15 vehicles</span></div>
+        </a>
+        <a href="#" class="fleet-card" style="text-decoration:none; color:inherit;">
+          <div class="fleet-media"><img src="tesla_car_PNG24.png" alt="Electric"></div>
+          <div class="fleet-body"><h3>Electric</h3><p>Zero-emission, low running costs.</p><span class="fleet-tag">9 vehicles</span></div>
+        </a>
+      </div>
+      <div style="text-align:center; margin-top:48px;"><a href="#" class="btn btn-primary">View full fleet</a></div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="how" class="process">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="hero-badge" style="background:var(--gold-light); color:var(--ink);">how it works</span>
+        <h2>Three steps. No games.</h2>
+        <p>From browsing to driving — exactly what to expect.</p>
+      </div>
+      <div class="process-grid">
+        <div class="step"><div class="step-num">01</div><h3>Choose your plan</h3><p>Pick a vehicle and decide: rent, lease, or own. Flexible terms for every need.</p></div>
+        <div class="step"><div class="step-num">02</div><h3>Verify, transparently</h3><p>Quick document check — we explain every requirement upfront, no hidden conditions.</p></div>
+        <div class="step"><div class="step-num">03</div><h3>Sign & drive</h3><p>Read a contract that says exactly what it means. Sign, insure, and drive away.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section style="background:var(--bg-soft);">
+    <div class="wrap stats-grid">
+      <div class="stat"><h3 data-count="120">0</h3><p>Vehicles in fleet</p></div>
+      <div class="stat"><h3 data-count="3400">0</h3><p>Clients served</p></div>
+      <div class="stat"><h3 data-count="98">0</h3><p>% on-time handover</p></div>
+      <div class="stat"><h3 data-count="7">0</h3><p>Years of trust</p></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="hero-badge" style="background:var(--gold-light);">testimonials</span>
+        <h2>Trusted by people who value plain terms.</h2>
+      </div>
+      <div class="test-grid">
+        <div class="test-card"><div class="stars">★★★★★</div><p>"Leased my Lexus through SIDITA — no fine print, everything explained upfront."</p><div class="test-who"><div class="avatar">A</div><div><strong>Aisha B.</strong><span>Lease client</span></div></div></div>
+        <div class="test-card"><div class="stars">★★★★★</div><p>"Rented a Defender for a family trip. Clean car, fair price, zero stress."</p><div class="test-who"><div class="avatar">K</div><div><strong>Kelechi O.</strong><span>Rental client</span></div></div></div>
+        <div class="test-card"><div class="stars">★★★★★</div><p>"Interest-free ownership plan made sense — my BMW is fully mine, ahead of schedule."</p><div class="test-who"><div class="avatar">M</div><div><strong>Musa T.</strong><span>Ownership client</span></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="background:var(--bg-soft);">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="hero-badge" style="background:var(--gold-light);">faq</span>
+        <h2>Good to know before you book.</h2>
+      </div>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item open"><button class="faq-q"><span>What does "interest-free" actually mean?</span><span class="plus">+</span></button><div class="faq-a"><p>Our plans are structured without compound interest. You're quoted one fixed total cost upfront, split into equal payments — the amount never grows.</p></div></div>
+        <div class="faq-item"><button class="faq-q"><span>What documents do I need?</span><span class="plus">+</span></button><div class="faq-a"><p>Valid driver's license, government ID, and proof of address. For leases, proof of income — we'll tell you exactly what qualifies.</p></div></div>
+        <div class="faq-item"><button class="faq-q"><span>Is insurance included?</span><span class="plus">+</span></button><div class="faq-a"><p>Yes. Every rental and lease includes comprehensive insurance as standard — built into the price you see.</p></div></div>
+        <div class="faq-item"><button class="faq-q"><span>Can I switch from renting to owning?</span><span class="plus">+</span></button><div class="faq-a"><p>Absolutely. Many clients start on a short lease and move to ownership — we credit part of your lease payments toward the purchase.</p></div></div>
+        <div class="faq-item"><button class="faq-q"><span>What's your cancellation policy?</span><span class="plus">+</span></button><div class="faq-a"><p>Rentals can be cancelled free of charge up to 24 hours before pickup. Lease terms are outlined clearly, no penalty clauses hidden.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA -->
+  <section id="contact" class="cta-section">
+    <div class="wrap cta-grid">
+      <div>
+        <span class="hero-badge" style="background:var(--gold-light);">contact</span>
+        <h2>Ready to get moving?</h2>
+        <p>Tell us what you need — one of our advisors will call you back with a straightforward quote, usually within the hour.</p>
+        <div class="cta-contact">
+          <a href="tel:+2348001234000"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.9 2.3z"/></svg> +234 800 123 4000</a>
+          <a href="mailto:hello@sidita-rentals.com"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg> hello@sidita-rentals.com</a>
+          <a href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="1.8"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg> Plot 14, Admiralty Way, Lekki</a>
+        </div>
+      </div>
+      <div class="form-card">
+        <form id="quoteForm">
+          <div class="form-row"><div class="field"><label>Full name</label><input type="text" placeholder="Your name" required></div><div class="field"><label>Phone</label><input type="tel" placeholder="+234 ..." required></div></div>
+          <div class="form-row"><div class="field"><label>Email</label><input type="email" placeholder="you@email.com" required></div><div class="field"><label>Service</label><select required><option value="">Select</option><option>Short-Term Rental</option><option>Long-Term Lease</option><option>Buy / Own</option></select></div></div>
+          <div class="form-row"><div class="field full"><label>Preferred vehicle (optional)</label><input type="text" placeholder="e.g. Land Rover Defender"></div></div>
+          <div class="form-row"><div class="field full"><label>Anything else?</label><textarea placeholder="Pickup city, dates, questions..."></textarea></div></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Request my quote</button>
+          <p class="form-note">By submitting, you agree to be contacted by a SIDITA advisor. We never share your data.</p>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a7a5a" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l2.5 2.5L16 9"/></svg>
+          <h3 style="margin-top:10px;">Request received</h3>
+          <p style="color:var(--ink-soft);">A SIDITA advisor will call or email you shortly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand"><img src="logo.png" alt="SIDITA"><p>Rent, lease or own with transparent, interest-free terms. Safe, reliable, comfortable — that's SIDITA.</p><div class="footer-social"><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.4"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9c0-.3.3-1 1-1z"/></svg></a><a href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M4 4l16 16M20 4L4 20"/></svg></a></div></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a href="#">Short-term rental</a></li><li><a href="#">Long-term lease</a></li><li><a href="#">Buy a vehicle</a></li><li><a href="#">Our fleet</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="#">About us</a></li><li><a href="#">How it works</a></li><li><a href="#">FAQ</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><address>Plot 14, Admiralty Way<br>Lekki Phase 1, Lagos<br>+234 800 123 4000<br>hello@sidita-rentals.com</address></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 SIDITA. All rights reserved.</span><span>Safe. Reliable. Comfort.</span></div>
+  </div>
+</footer>
+
+<script>
+  // Dynamic header: transparent until scroll, then white with blur
+  const headerEl = document.getElementById('siteHeader');
+  let lastScrollY = 0;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY > 20) {
+      headerEl.classList.add('scrolled');
+    } else {
+      headerEl.classList.remove('scrolled');
+    }
+    lastScrollY = scrollY;
+  });
+
+  // Mobile menu toggle
+  const burger = document.getElementById('burgerBtn');
+  const panel = document.getElementById('mobilePanel');
+  burger.addEventListener('click', () => {
+    panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+  });
+  document.querySelectorAll('.mobile-panel a').forEach(a => a.addEventListener('click', () => panel.style.display = 'none'));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const answer = item.querySelector('.faq-a');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      }
+    });
+  });
+  window.addEventListener('load', () => {
+    const first = document.querySelector('.faq-item.open .faq-a');
+    if (first) first.style.maxHeight = first.scrollHeight + 'px';
+  });
+
+  // Stats count-up
+  const stats = document.querySelectorAll('.stat h3');
+  let counted = false;
+  const countUp = () => {
+    if (counted) return;
+    counted = true;
+    stats.forEach(el => {
+      const target = parseInt(el.dataset.count, 10);
+      const duration = 1400;
+      const start = performance.now();
+      const tick = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target).toLocaleString();
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  };
+  const statsSection = document.querySelector('.stats-grid');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) countUp(); });
+  }, { threshold: 0.3 });
+  if (statsSection) io.observe(statsSection);
+
+  // Form submission
+  const form = document.getElementById('quoteForm');
+  const success = document.getElementById('formSuccess');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+</script>
+</body>
+</html>
