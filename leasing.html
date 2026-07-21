@@ -7,9 +7,12 @@
 <meta name="description" content="SIDITA Halal Rentals — transparent, interest-free vehicle rental, leasing and ownership. Verified fleet, fair terms, no hidden fees.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -132,6 +135,11 @@
     .brand img { height: 44px; width: auto; }
     .brand { flex-shrink: 0; }
 
+    .brand .logo-dark { display: none; }
+    .brand .logo-light { display: block; }
+    header.scrolled .brand .logo-dark { display: block; }
+    header.scrolled .brand .logo-light { display: none; }
+
     .nav-links {
       display: flex;
       align-items: center;
@@ -141,13 +149,13 @@
     .nav-links a {
       font-size: 14px;
       font-weight: 500;
-      color: white;
-      transition: color 0.35s ease;
+      color: #ffffff;
+      transition: 0.2s;
       position: relative;
       text-decoration: none;
     }
 
-    .nav-links a:hover { color: white; }
+    .nav-links a:hover { color: #ffffff; opacity: 0.8; }
     .nav-links a::after {
       content: '';
       position: absolute;
@@ -159,10 +167,7 @@
     .nav-links a:hover::after { width: 100%; }
 
     header.scrolled .nav-links a { color: var(--ink-soft); }
-    header.scrolled .nav-links a:hover { color: var(--ink); }
-
-    .burger span { background: white; transition: background 0.35s ease; }
-    header.scrolled .burger span { background: var(--ink); }
+    header.scrolled .nav-links a:hover { color: var(--ink); opacity: 1; }
 
     .nav-cta { display: flex; align-items: center; gap: 16px; }
 
@@ -176,10 +181,12 @@
     }
     .burger span {
       width: 24px; height: 2px;
-      background: var(--ink);
+      background: #ffffff;
       border-radius: 4px;
       transition: 0.2s;
     }
+
+    header.scrolled .burger span { background: var(--ink); }
 
     .mobile-panel {
       display: none;
@@ -470,6 +477,7 @@
       .nav { padding: 14px var(--wrap-pad); }
       .nav-links { display: none; }
       .burger { display: flex; }
+      .nav-cta .btn-primary { display: none; }
       .page-header { padding: 108px 0 44px; }
       .fleet-section { padding: 48px 0 70px; }
       .fleet-grid { grid-template-columns: 1fr; }
@@ -501,7 +509,10 @@
 
 <header id="siteHeader">
   <nav class="nav">
-    <a href="index.html#top" class="brand"><img id="navLogo" src="logo-light.png" alt="SIDITA"></a>
+    <a href="index.html#top" class="brand">
+      <img src="logo-light.png" alt="SIDITA" class="logo-light">
+      <img src="logo.png" alt="SIDITA" class="logo-dark">
+    </a>
     <ul class="nav-links">
       <li><a href="index.html#fleet">Fleet</a></li>
       <li><a href="index.html#services">Services</a></li>
@@ -744,15 +755,9 @@
 <script>
   // Header scroll effect
   const headerEl = document.getElementById('siteHeader');
-  const navLogo = document.getElementById('navLogo');
-  function updateHeaderState() {
-    const scrolled = window.scrollY > 20;
-    headerEl.classList.toggle('scrolled', scrolled);
-    const desiredSrc = scrolled ? 'logo.png' : 'logo-light.png';
-    if (navLogo.getAttribute('src') !== desiredSrc) navLogo.setAttribute('src', desiredSrc);
-  }
-  window.addEventListener('scroll', updateHeaderState);
-  updateHeaderState();
+  window.addEventListener('scroll', () => {
+    headerEl.classList.toggle('scrolled', window.scrollY > 20);
+  });
 
   // Mobile menu
   const burger = document.getElementById('burgerBtn');
