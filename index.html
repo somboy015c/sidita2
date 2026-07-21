@@ -29,6 +29,14 @@
       --shadow-sm: 0 12px 30px rgba(0,0,0,0.04);
       --shadow-md: 0 20px 40px rgba(0,0,0,0.06);
       --radius: 32px;
+      --wrap-pad: 40px;
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     body {
@@ -42,10 +50,12 @@
       font-synthesis: none;
     }
 
+    img { max-width: 100%; height: auto; }
+
     .wrap {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 var(--wrap-pad);
     }
 
     h1, h2, h3, h4 {
@@ -117,12 +127,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 40px;
+      padding: 16px var(--wrap-pad);
       max-width: 1280px;
       margin: 0 auto;
+      gap: 16px;
     }
 
     .brand img { height: 44px; width: auto; }
+    .brand { flex-shrink: 0; }
 
     .nav-links {
       display: flex;
@@ -171,7 +183,7 @@
     .mobile-panel {
       display: none;
       background: white;
-      padding: 20px 40px 30px;
+      padding: 20px var(--wrap-pad) 30px;
       border-bottom: 1px solid var(--border-light);
     }
 
@@ -558,23 +570,58 @@
     }
 
     @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; }
+      :root { --wrap-pad: 32px; }
+      section { padding: 76px 0; }
+      .hero { padding: 130px 0 64px; }
+      .hero-grid { grid-template-columns: 1fr; gap: 40px; }
       .hero-art { order: -1; }
+      .hero p { max-width: 100%; }
       .values-grid, .services-grid, .fleet-grid, .process-grid, .test-grid { grid-template-columns: repeat(2,1fr); }
       .stats-grid { grid-template-columns: repeat(2,1fr); }
-      .cta-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .cta-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .nav-cta .btn { padding: 14px 22px; font-size: 14px; }
     }
 
     @media (max-width: 720px) {
-      .wrap { padding: 0 24px; }
+      :root { --wrap-pad: 24px; }
+      .nav { padding: 14px var(--wrap-pad); }
       .nav-links { display: none; }
       .burger { display: flex; }
+      .hero { padding: 116px 0 56px; }
+      section { padding: 60px 0; }
+      .section-head { margin-bottom: 36px; }
       .values-grid, .services-grid, .fleet-grid, .process-grid, .test-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 20px; }
+      .stat h3 { font-size: 34px; }
       .form-row { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { text-align: center; justify-content: center; }
       .hero-ctas { flex-direction: column; align-items: stretch; }
+      .trust-strip { gap: 18px 24px; }
+      .form-card { padding: 28px 22px; }
+      .cta-section, .process { border-radius: 24px 24px 0 0; }
+      .value-card, .service-card { padding: 32px 24px; }
+      .brand img { height: 36px; }
+    }
+
+    @media (max-width: 480px) {
+      :root { --wrap-pad: 18px; }
+      .hero h1 { font-size: 34px; }
+      .hero p { font-size: 16px; }
+      .hero-badge { font-size: 11px; padding: 5px 14px; }
+      .btn { padding: 14px 24px; font-size: 14px; }
+      .stats-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .stat h3 { font-size: 28px; }
+      .section-head h2 { font-size: 28px; }
+      .test-card, .value-card, .service-card { padding: 26px 20px; }
+      .cta-grid h2 { font-size: 28px; }
+      .form-card { padding: 22px 18px; }
+      .mobile-panel { padding: 16px var(--wrap-pad) 24px; }
+    }
+
+    @media (max-width: 360px) {
+      .stats-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -635,7 +682,7 @@
 
   <!-- MARQUEE -->
   <div class="band">
-    <div class="wrap" style="padding:0 40px; overflow:hidden;">
+    <div class="wrap" style="padding:0 var(--wrap-pad); overflow:hidden;">
       <div class="marquee-track">
         <span>Sedans</span><span>◆</span><span>SUVs</span><span>◆</span><span>Luxury</span><span>◆</span><span>Electric</span><span>◆</span><span>Rent</span><span>◆</span><span>Lease</span><span>◆</span><span>Own</span><span>◆</span>
         <span>Sedans</span><span>◆</span><span>SUVs</span><span>◆</span><span>Luxury</span><span>◆</span><span>Electric</span><span>◆</span><span>Rent</span><span>◆</span><span>Lease</span><span>◆</span><span>Own</span><span>◆</span>

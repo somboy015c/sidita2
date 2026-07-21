@@ -7,7 +7,7 @@
   <meta name="description" content="Browse SIDITA's verified fleet — sedans, SUVs, luxury, electric. Transparent, interest-free terms.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231a7a5a'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5z'/%3E%3Cpath d='M2 17l10 5 10-5'/%3E%3Cpath d='M2 12l10 5 10-5'/%3E%3C/svg%3E" type="image/svg+xml">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
@@ -26,27 +26,45 @@
       --shadow-sm: 0 12px 30px rgba(0,0,0,0.04);
       --shadow-md: 0 20px 40px rgba(0,0,0,0.06);
       --radius: 32px;
+      --wrap-pad: 40px;
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
     }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background: var(--bg);
       color: var(--ink);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-synthesis: none;
     }
+
+    img { max-width: 100%; height: auto; }
 
     .wrap {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 var(--wrap-pad);
     }
 
     h1, h2, h3, h4 {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
+      font-family: 'Syne', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 600;
       letter-spacing: -0.02em;
       line-height: 1.1;
+    }
+
+    a {
+      text-decoration: none !important;
+      color: inherit;
     }
 
     .btn {
@@ -61,11 +79,11 @@
       transition: 0.2s ease;
       border: none;
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--ink);
       color: white;
       box-shadow: var(--shadow-sm);
-      text-decoration: none;
+      text-decoration: none !important;
     }
 
     .btn-primary {
@@ -106,12 +124,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 40px;
+      padding: 16px var(--wrap-pad);
       max-width: 1280px;
       margin: 0 auto;
+      gap: 16px;
     }
 
     .brand img { height: 44px; width: auto; }
+    .brand { flex-shrink: 0; }
 
     .nav-links {
       display: flex;
@@ -122,13 +142,13 @@
     .nav-links a {
       font-size: 14px;
       font-weight: 500;
-      color: var(--ink-soft);
-      transition: 0.2s;
+      color: white;
+      transition: color 0.35s ease;
       position: relative;
       text-decoration: none;
     }
 
-    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover { color: white; }
     .nav-links a::after {
       content: '';
       position: absolute;
@@ -138,6 +158,12 @@
       transition: 0.25s;
     }
     .nav-links a:hover::after { width: 100%; }
+
+    header.scrolled .nav-links a { color: var(--ink-soft); }
+    header.scrolled .nav-links a:hover { color: var(--ink); }
+
+    .burger span { background: white; transition: background 0.35s ease; }
+    header.scrolled .burger span { background: var(--ink); }
 
     .nav-cta { display: flex; align-items: center; gap: 16px; }
 
@@ -159,7 +185,7 @@
     .mobile-panel {
       display: none;
       background: white;
-      padding: 20px 40px 30px;
+      padding: 20px var(--wrap-pad) 30px;
       border-bottom: 1px solid var(--border-light);
     }
 
@@ -432,19 +458,43 @@
 
     /* ----- RESPONSIVE ----- */
     @media (max-width: 1024px) {
+      :root { --wrap-pad: 32px; }
+      .page-header { padding: 120px 0 52px; }
+      .fleet-section { padding: 60px 0 84px; }
       .fleet-grid { grid-template-columns: repeat(2, 1fr); }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+      .nav-cta .btn { padding: 14px 22px; font-size: 14px; }
     }
 
     @media (max-width: 720px) {
-      .wrap { padding: 0 24px; }
+      :root { --wrap-pad: 24px; }
+      .nav { padding: 14px var(--wrap-pad); }
       .nav-links { display: none; }
       .burger { display: flex; }
+      .page-header { padding: 108px 0 44px; }
+      .fleet-section { padding: 48px 0 70px; }
       .fleet-grid { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { text-align: center; justify-content: center; }
       .fleet-head { flex-direction: column; align-items: flex-start; }
       .filters { width: 100%; }
       .filter-btn { flex: 1 0 auto; }
+      .car-body { padding: 20px 20px 22px; }
+      .brand img { height: 36px; }
+    }
+
+    @media (max-width: 480px) {
+      :root { --wrap-pad: 18px; }
+      .page-header h1 { font-size: 30px; }
+      .page-header p { font-size: 15px; }
+      .breadcrumb { font-size: 12px; }
+      .btn { padding: 14px 24px; font-size: 14px; }
+      .fleet-head .section-head h2 { font-size: 24px; }
+      .filters { gap: 8px; }
+      .filter-btn { padding: 9px 16px; font-size: 12.5px; }
+      .car-media { height: 170px; }
+      .car-price { font-size: 18px; }
+      .mobile-panel { padding: 16px var(--wrap-pad) 24px; }
     }
   </style>
 </head>
@@ -452,7 +502,7 @@
 
 <header id="siteHeader">
   <nav class="nav">
-    <a href="index.html#top" class="brand"><img src="logo.png" alt="SIDITA"></a>
+    <a href="index.html#top" class="brand"><img id="navLogo" src="logo-light.png" alt="SIDITA"></a>
     <ul class="nav-links">
       <li><a href="index.html#fleet">Fleet</a></li>
       <li><a href="index.html#services">Services</a></li>
@@ -695,9 +745,15 @@
 <script>
   // Header scroll effect
   const headerEl = document.getElementById('siteHeader');
-  window.addEventListener('scroll', () => {
-    headerEl.classList.toggle('scrolled', window.scrollY > 20);
-  });
+  const navLogo = document.getElementById('navLogo');
+  function updateHeaderState() {
+    const scrolled = window.scrollY > 20;
+    headerEl.classList.toggle('scrolled', scrolled);
+    const desiredSrc = scrolled ? 'logo.png' : 'logo-light.png';
+    if (navLogo.getAttribute('src') !== desiredSrc) navLogo.setAttribute('src', desiredSrc);
+  }
+  window.addEventListener('scroll', updateHeaderState);
+  updateHeaderState();
 
   // Mobile menu
   const burger = document.getElementById('burgerBtn');
